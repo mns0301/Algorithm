@@ -1,11 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <cmath>
-#include <map>
 using namespace std;
-
-map<long long, long long> ma;
 
 long long gcd(long long a, long long b) {
 	while (b != 0) {
@@ -16,27 +12,12 @@ long long gcd(long long a, long long b) {
 	return a;
 }
 
-vector<long long> sieve(long long n) {
-	vector<bool> is_prime(n + 1, true);
-	vector<long long> primes;
-	is_prime[0] = is_prime[1] = false;
-	for (long long i = 2; i <= n; i++) {
-		if (is_prime[i]) {
-			primes.push_back(i);
-			for (long long j = i * i; j <= n; j += i) {
-				is_prime[j] = false;
-			}
-		}
-	}
-	return primes;
-}
-
 long long countDivisors(long long n) {
 	long long count = 0;
 	for (long long i = 1; i * i <= n; i++) {
 		if (n % i == 0) {
-			count++; // i가 n의 약수
-			if (i != n / i) count++; // n / i가 n의 약수
+			count++;
+			if (i != n / i) count++;
 		}
 	}
 	return count;
@@ -71,7 +52,6 @@ int main(void) {
 	long long m_value = max / min;
 	long long result = countDivisors(m_value);
 	cout << result;
-
-
+    
 	return 0;
 }
