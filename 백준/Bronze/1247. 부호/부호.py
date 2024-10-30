@@ -1,11 +1,12 @@
+import sys
 a = 3
 while (a) :
 	a-=1
 
-	n = int(input())
+	n = int(sys.stdin.readline().strip())
 	sum = 0
 	for i in range(n) :
-		tmp = int(input())
+		tmp = int(sys.stdin.readline().strip())
 		sum += tmp
 	if (sum > 0) : print('+')
 	elif (sum < 0) : print('-')
