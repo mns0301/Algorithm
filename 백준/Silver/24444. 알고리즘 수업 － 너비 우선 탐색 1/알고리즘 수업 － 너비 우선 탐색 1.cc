@@ -1,58 +1,74 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
-#include <stdlib.h>
+#include <array>
+#include <deque>
 #include <queue>
+#include <map>
+#include <cmath>
 using namespace std;
 
-void BFS(vector<int> v[], int visit[], int r, int* cnt) {
-	queue<int> que;
-	que.push(r);
-	int temp;
+#define INT_MAX 2147483647
+#define INT_MIN -2147483648
+#define fastio ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
+#define ll long long
+#define str string
+#define vi vector<int>
+#define vl vector<ll>
+#define vvi vector<vi>
+#define vvl vector<vl>
+#define pii pair<int, int>
+#define pll pair<ll, ll>
+#define vpii vector<pii>
+#define vpll vector<pll>
+#define w(t) while(t--)
+#define f(i, n) for(int i = 0; i < n; i++)
 
-	while (!que.empty()) {
-		temp = que.front();
-		que.pop();
-		if (visit[temp] == 0) visit[temp] = (*cnt)++;
-		else continue;
+vi visited;
 
-		int s = 0, e = v[temp].size();
-		for (s; s < e; s++) {
-			//cout << v[temp][s];
-			que.push(v[temp][s]);
-		}
-	}
-	return;
+void bfs(vvi& graph, int r) {
+    queue<int> q;
+    q.push(r);
+    int cnt = 1;
+
+    while (q.size()) {
+        int now = q.front();
+        q.pop();
+
+        visited[now] = cnt;
+        cnt++;
+
+        f(i, graph[now].size()) {
+            if (visited[graph[now][i]] == 0) {
+                q.push(graph[now][i]);
+                visited[graph[now][i]] = 1;
+            }
+        }
+    }
 }
 
-bool compare(int a, int b) {
-	return a < b;
-}
+int main() {
+    fastio;
 
-int main(void) {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	cout.tie(0);
+    int n, m, r;
+    cin >> n >> m >> r;
+    vvi graph(n + 1);
+    visited.resize(n + 1);
 
+    f(i, m) {
+        int u, v;
+        cin >> u >> v;
+        graph[u].push_back(v);
+        graph[v].push_back(u);
+    }
 
-	int n, m, r;
-	cin >> n >> m >> r;
-	vector<int> v[100001];
-	int* visit = (int*)malloc(sizeof(int) * (n + 1));
-	for (int i = 0; i < n + 1; i++) visit[i] = 0;
-	int cnt = 1;
+    for (int i = 1; i <= n; i++)
+        sort(graph[i].begin(), graph[i].end());
+    
+    bfs(graph, r);
 
-	int a, b;
-	for (int i = 0; i < m; i++) {
-		cin >> a >> b;
-		v[a].push_back(b);
-		v[b].push_back(a);
-	}
-	for (int i = 0; i < n + 1; i++) sort(v[i].begin(), v[i].end(), compare);
-	BFS(v, visit, r, &cnt);
+    for (int i = 1; i <= n; i++) 
+        cout << visited[i] << "\n";
 
-	for (int i = 1; i < n + 1; i++) cout << visit[i] << "\n";
-
-	free(visit);
-	return 0;
+    return 0;
 }
