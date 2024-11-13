@@ -25,27 +25,18 @@ using namespace std;
 int main() {
     fastio;
 
-    int n, k;
+    int n, k, ans = 0;
     cin >> n >> k;
-    vi mul(n, 0);
-    vi cnt(k + 1, 0);
-    vi order(k, 0);
-    int ans = 0;
+    vi mul(n, 0), cnt(k + 1, 0), order(k, 0);
 
     f(i, k) {
         cin >> order[i];
         cnt[order[i]]++;
     }
 
-    // cout << "\n";
-    // f(i, k) cout << order[i] << " ";
-    // cout << "\n";
-    // f(i, k + 1) cout << cnt[i] << " ";
-
     if (n==1) {
         for (int i = 1; i < k; i++) {
-            if (order[i] != order[i-1])
-                ans++;
+            if (order[i] != order[i-1]) ans++;
         }
         cout << ans;
         return 0;
@@ -92,18 +83,9 @@ int main() {
         }
         a:
             cnt[now]--;
-            // cout << "\n";
-            // f(i, k) cout << order[i] << " ";
-            // cout << "\n";
-            // f(i, k + 1) cout << cnt[i] << " ";
     }
 
     cout << ans;
 
     return 0;
 }
-/*
-
-저거 시간복잡도가 O(n)임
-
-*/
