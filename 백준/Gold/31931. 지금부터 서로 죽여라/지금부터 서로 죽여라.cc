@@ -26,87 +26,54 @@ using namespace std;
 #define f1(i, n) for(int i = 1; i <= n; i++)
 
 void fun() {
-    ll n_hp, s_hp;
-    ll n_atk, n_heal, s_atk, s_heal;
-    cin >> n_hp >> s_hp;
-    cin >> n_atk >> n_heal >> s_atk >> s_heal;
+    ll hp1, hp2, atk1, atk2, heal1, heal2;
+    cin >> hp1 >> hp2 >> atk1 >> heal1 >> atk2 >> heal2;
+    int win = 0;
 
-    if (n_atk >= s_hp) {
-        cout << "NARUTO\n";
-        return;
+    if (hp2 <= atk1)
+        win = 1;
+	else if (hp1+heal1 <= atk2)
+        win = -1;
+	else if (heal1 >= atk2 && heal2 >= atk1) {
+        win = 0;
     }
-    if (s_atk >= n_heal + n_hp) {
-        cout << "SASUKE\n";
-        return;
+	else if (atk1 > heal2 && atk2 > heal1) {
+        if (ceil((double)hp1 / atk2) >= ceil((double)hp2 / atk1))
+            win = 1;
+		else
+            win = -1;
     }
-
-    if (s_heal >= n_atk && n_heal >= s_atk) {
-        cout << "DRAW\n";
-        return;
-    }
-    if (s_heal < n_atk && n_heal < s_atk) {
-        if (ceil((double)s_hp / n_atk) > ceil((double)n_hp / s_atk)) {
-            cout << "SASUKE\n";
-            return;
-        }
-        else {
-            cout << "NARUTO\n";
-            return;
-        }
-    }
-    else if (s_heal < n_atk) {
-        if (s_atk < n_heal) {
-            cout << "NARUTO\n";
-            return;
-        }
-        else {
-            if (ceil((double)s_hp / n_atk) <= ceil((double)n_hp / s_atk))
-            {
-                cout << "NARUTO\n";
-                return;
-            }
-            else
-            {
-                cout << "DRAW\n";
-                return;
-            }
-        }
-    }
-    else if (n_heal < s_atk) {
-        if (n_atk < s_heal) {
-            cout << "SASUKE\n";
-            return;
-        }
-        else {
-            if (ceil((double)s_hp / n_atk) > ceil((double)n_hp / s_atk))
-            {
-                cout << "SASUKE\n";
-                return;
-            }
-            else
-            {
-                cout << "DRAW\n";
-                return;
-            }
-        }
-    }
-    else {
-        if (ceil((double)s_hp / n_atk) > ceil((double)n_hp / s_atk))
-        {
-            cout << "SASUKE\n";
-            return;
-        }
+	else if (atk1 > heal2) {
+        if (atk2 < heal1) 
+            win = 1;
+        else if (ceil((double)hp1 / atk2) >= ceil((double)hp2 / atk1))
+            win = 1;
         else
-        {
-            cout << "NARUTO\n";
-            return;
-        }
+            win = 0;
     }
+    else if (atk2 > heal1) {
+        if (atk1 < heal2)
+            win = -1;
+        else if (ceil((double)hp1 / atk2) < ceil((double)hp2 / atk1))
+            win = -1;
+        else
+            win = 0;
+    }
+	else {
+        win = 0;
+    }
+
+	if (win == 1)
+        cout << "NARUTO\n";
+	else if (win==-1)
+        cout << "SASUKE\n";
+	else
+        cout << "DRAW\n";
 }
 
 int main() {
-    fastio;
-
+	fastio;
+    
     int t;
     cin >> t;
     w(t) fun();
