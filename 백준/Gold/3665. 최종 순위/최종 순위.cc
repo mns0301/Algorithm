@@ -1,7 +1,6 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
-#include <queue>
 using namespace std;
 #define fastio ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
 
@@ -29,34 +28,27 @@ void fun() {
         }
     }
 
-    priority_queue<pair<int, int>> pq;
+    vector<pair<int, int>> ans;
+    for (int i = 1; i <= n; i++) ans.push_back({ degree[i], i });
+    sort(ans.begin(), ans.end());
 
-    for (int i = 1; i <= n; i++) {
-        pq.push({ -degree[i], i });
-    }
-
-    int pre_deg = 0;
-    for (int i = 1; i <= n; i++) {
-        int now = pq.top().second;
-        int now_deg = -pq.top().first;
-        pq.pop();
-
-        if (pre_deg == now_deg)
+    int pre = 0, flag = 1;
+    for (int i = 0; i < n; i++) {
+        if (pre == ans[i].first) {
+            flag = 0;
             break;
-        else {
-            pre_deg = now_deg;
-            rank[i] = now;
         }
+        pre = ans[i].first;
+        rank[i] = ans[i].second;
     }
 
-    if (pq.empty()) {
-        for (int i = 1; i <= n; i++)
+    if (flag) {
+        for (int i = 0; i < n; i++)
             cout << rank[i] << " ";
         cout << "\n";
     }
-    else {
+    else
         cout << "IMPOSSIBLE\n";
-    }
 
     return;
 }
