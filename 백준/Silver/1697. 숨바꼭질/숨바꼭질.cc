@@ -1,46 +1,44 @@
 #include <iostream>
-#include <algorithm>
-#include <vector>
 #include <queue>
+#include <vector>
 using namespace std;
 
-int find(vector<int>& v, int n, int k) {
-	queue<int> que;
-	queue<int> num;
-	int temp = 0;
-	int x = 0;
-	que.push(n);
-	num.push(0);
+#define fastio ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
 
-	while (!que.empty()) {
-		temp = que.front();
-		x = num.front();
-		que.pop();
-		num.pop();
-		if (temp == k) break;
-		if (temp > 200000 || temp < 0 || v[temp] != 0) continue;
-		v[temp]++;
-		que.push(temp - 1);
-		que.push(temp + 1);
-		que.push(2 * temp);
-		num.push(x + 1);
-		num.push(x + 1);
-		num.push(x + 1);
-	}
-	return x;
+int main() {
+    fastio;
+
+    int n, k;
+    cin >> n >> k;
+
+    vector<int> visited(100001, 0);
+    queue<pair<int, int>> q;
+    q.push({ 0, n });
+
+    while (q.size()) {
+        auto [cnt, now] = q.front();
+        q.pop();
+
+        if (now == k) {
+            cout << cnt;
+            break;
+        }
+
+        visited[now] = 1;
+
+        if (now != 0 && visited[now - 1] == 0) {
+            q.push({ cnt + 1, now - 1 });
+            visited[now - 1] = 1;
+        }
+        if (now != 100000 && visited[now + 1] == 0) {
+            q.push({ cnt + 1, now + 1 });
+            visited[now + 1] = 1;
+        }
+        if (now*2 <= 100000 && visited[now*2] == 0) {
+            q.push({ cnt + 1, now * 2 });
+            visited[now * 2] = 1;
+        }
+    }
+
+    return 0;
 }
-
-int main(void) {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	cout.tie(0);
-
-	int n, k;
-	cin >> n >> k;
-	vector<int> v(200001, 0);
-	
-	cout << find(v, n, k);;
-
-	
-	return 0;
-}	
