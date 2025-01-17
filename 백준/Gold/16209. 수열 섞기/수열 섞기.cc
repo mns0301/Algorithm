@@ -31,17 +31,17 @@ int main() {
 
     for (int i = 0; i < p.size(); i++) {
         if (i % 2)
-            dp.push_front(p[i]);
-        else
             dp.push_back(p[i]);
+        else
+            dp.push_front(p[i]);
     }
 
     for (int i = 0; i < n.size(); i++)
     {
         if (i % 2)
-            dn.push_front(n[i]);
-        else
             dn.push_back(n[i]);
+        else
+            dn.push_front(n[i]);
     }
 
     while (dn.size()) {
