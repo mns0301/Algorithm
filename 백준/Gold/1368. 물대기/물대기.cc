@@ -28,30 +28,11 @@ int main() {
 	}
 
 	for (int i = 0; i < n; i++) {
-		// int flag = 1;
 		for (int j = 0; j < n; j++) {
 			if (i==j) continue;
-			
 			graph[i].push_back(j);
-			// if (wi[i] > w[i][j]) {
-			// 	flag = 0;
-			// }
 		}
-		// if (flag) 
-		// 	pq.push({wi[i], i});
 	}
-
-	// if (pq.empty()) {
-	// 	int idx = 0;
-	// 	int m = wi[0];
-	// 	for (int i = 1; i < n; i++) {
-	// 		if (wi[i] < m) {
-	// 			idx = i;
-	// 			m = wi[i];
-	// 		}
-	// 	}
-	// 	pq.push({m, idx});
-	// }
 
 	while (pq.size())
 	{
