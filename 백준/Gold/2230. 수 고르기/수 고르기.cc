@@ -15,7 +15,7 @@ int main() {
         cin >> v[i];
     sort(v.begin(), v.end());
 
-    while (s <= e) {
+    while (s <= e && e != n) {
         int d = v[e] - v[s];
         if (d >= m) {
             s++;
@@ -23,9 +23,6 @@ int main() {
         }
         else if (d < m) 
             e++;
-
-        if (e == n)
-            break;
     }
 
     cout << x;
