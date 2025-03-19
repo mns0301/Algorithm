@@ -1,45 +1,31 @@
-#include <iostream>
-#include <vector>
-#include <cmath>
+#include <stdio.h>
+int main()
+{
 
-typedef long long int ll;
-using namespace std;
+    int n, ans = 0;
+    scanf("%d", &n);
+    
+    long long v[1500][2];
+    for (int i = 0; i < n; i++)
+        scanf("%lld %lld", &v[i][0], &v[i][1]);
 
-struct Point {
-    ll x, y;
-};
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            for (int k = j + 1; k < n; k++) {
+                long long x1 = v[k][0] - v[j][0];
+                long long y1 = v[k][1] - v[j][1];
+                long long x2 = v[i][0] - v[j][0];
+                long long y2 = v[i][1] - v[j][1];
+                long long x3 = v[i][0] - v[k][0];
+                long long y3 = v[i][1] - v[k][1];
 
-int main() {
-    int N;
-    cin >> N;
-
-    vector<Point> points(N);
-    for (int i = 0; i < N; ++i) {
-        cin >> points[i].x >> points[i].y;
-    }
-
-    ll ans = 0;
-
-    for (int i = 0; i < N; ++i) {
-        for (int j = i + 1; j < N; ++j) {
-            for (int k = j + 1; k < N; ++k) {
-                ll dx1 = points[i].x - points[j].x;
-                ll dy1 = points[i].y - points[j].y;
-                ll dx2 = points[i].x - points[k].x;
-                ll dy2 = points[i].y - points[k].y;
-                ll dx3 = points[j].x - points[k].x;
-                ll dy3 = points[j].y - points[k].y;
-
-                ll d1 = dx1 * dx1 + dy1 * dy1;
-                ll d2 = dx2 * dx2 + dy2 * dy2;
-                ll d3 = dx3 * dx3 + dy3 * dy3;
-
-                if (d1 + d2 == d3 || d1 + d3 == d2 || d2 + d3 == d1) {
+                if (x1 * x2 + y1 * y2 == 0 || x1 * x3 + y1 * y3 == 0 || x3 * x2 + y3 * y2 == 0)
                     ans++;
-                }
             }
         }
     }
 
-    cout << ans << '\n';
+    printf("%d", ans);
+
+    return 0;
 }
