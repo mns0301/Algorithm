@@ -1,39 +1,31 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <iostream>
+#include <algorithm>
+#include <vector>
+using namespace std;
 
-// 비교 함수
-int compare(const void* a, const void* b) {
-    char* str1 = *(char**)a;
-    char* str2 = *(char**)b;
-    int len1 = strlen(str1);
-    int len2 = strlen(str2);
+#define fastio ios_base::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr)
 
-    if (len1 != len2) return len1 - len2;
-    return strcmp(str1, str2);
+bool cmp(string &p, string &q){
+    if(p.size() == q.size()){
+        return p<q;
+    }
+    return p.size()<q.size();
 }
 
-int main(void) {
-    int n;
-    scanf("%d", &n);
+int main() {
+    fastio;
 
-    char** words = (char**)malloc(sizeof(char*) * n);
-    for (int i = 0; i < n; i++) {
-        words[i] = (char*)malloc(sizeof(char) * 51);
-        scanf("%s", words[i]);
+    int N;
+    cin >> N;
+    vector<string> arr(N);
+    for(int i = 0; i<N; i++){
+        cin >> arr[i];
     }
-
-    // 정렬
-    qsort(words, n, sizeof(char*), compare);
-
-    // 중복 제거 및 출력
-    printf("%s\n", words[0]);
-    for (int i = 1; i < n; i++) {
-        if (strcmp(words[i], words[i - 1]) != 0) printf("%s\n", words[i]);
+    sort(arr.begin(), arr.end(), cmp);
+    arr.erase(unique(arr.begin(), arr.end()), arr.end());
+    for(int i = 0; i<arr.size(); i++){
+            cout << arr[i] << "\n";
     }
-
-    for (int i = 0; i < n; i++) free(words[i]);
-    free(words);
 
     return 0;
 }
