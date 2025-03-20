@@ -14,35 +14,17 @@ using namespace std;
 #define fastio ios_base::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr)
 #define ll long long
 
-// map<ll, int> m;
-vector<ll> v1;
-map<ll, int> m1;
-vector<ll> v;
+vector<ll> v, v1, v2;
 int n;
 ll s;
 ll ans = 0;
-
-void fun(int depth, ll sum) {
-    if (depth == (n + 1)/2) {
-        v1.push_back(sum);
-        // m[sum]++;
+void fun0(vector<ll> &tmp, int st, int en, ll sum) {
+    if (st == en) {
+        tmp.push_back(sum);
         return;
     }
-    fun(depth + 1, sum + v[depth]);
-    fun(depth + 1, sum);
-}
-
-void fun1(int depth, ll sum) {
-    if (depth == n) {
-        m1[sum]++;
-        ans += upper_bound(v1.begin(), v1.end(), s - sum) - lower_bound(v1.begin(), v1.end(), s - sum);
-        // if (m.find(s-sum) != m.end())
-        //     ans += m[s - sum];
-        return;
-    }
-    
-    fun1(depth + 1, sum + v[depth]);
-    fun1(depth + 1, sum);
+    fun0(tmp, st + 1, en, sum + v[st]);
+    fun0(tmp, st + 1, en, sum);
 }
 
 int main() {
@@ -55,16 +37,15 @@ int main() {
         v.push_back(t);
     }
 
-    fun(0, 0);
-    v1.pop_back();
+    fun0(v1, 0, (n + 1) / 2, 0);
     sort(v1.begin(), v1.end());
-    // m[0]--;
+    fun0(v2, (n + 1) / 2, n, 0);
 
-    fun1((n + 1) / 2, 0);
-    m1[0]--;
+    for (auto i : v2) 
+        ans += upper_bound(v1.begin(), v1.end(), s - i) - lower_bound(v1.begin(), v1.end(), s - i);
 
-    if (m1.find(s) != m1.end())
-        ans += m1[s];
+    if (s==0)
+        ans--;
 
     cout << ans;
 
