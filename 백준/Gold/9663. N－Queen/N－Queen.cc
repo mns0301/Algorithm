@@ -1,54 +1,29 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
-int ans = 0;
-int n;
-int xx[15] = { -1, };
-int yy[15] = { -1, };
-int c1[30] = { -1, };
-int c2[30] = { -1, };
+int ans, n, xx[15], yy[15], c1[30], c2[30];
 
 void fun(int x) {
-	if (x == n) {
-		ans++;
-		return;
-	}
-	if (xx[x] != -1) return;
-	xx[x] = 1;
-	for (int i = 0; i < n; i++) {
-		if (yy[i] != -1) continue;
-		if (c1[x + i] != -1) continue;
-		if (c2[n - x + i] != -1) continue;
-		yy[i] = 1;
-		c1[x + i] = 1;
-		c2[n - x + i] = 1;
-		fun(x + 1);
-		c2[n - x + i] = -1;
-		c1[x + i] = -1;
-		yy[i] = -1;
-	}
-	xx[x] = -1;
+    if (x == n) {
+        ans++;
+        return;
+    }
+    if (xx[x])
+        return;
+    xx[x] = 1;
+    for (int i = 0; i < n; i++) {
+        if (yy[i] || c1[x + i] || c2[n - x + i])
+            continue;
+        yy[i] = c1[x + i] = c2[n - x + i] = 1;
+        fun(x + 1);
+        c2[n - x + i] = c1[x + i] = yy[i] = 0;
+    }
+    xx[x] = 0;
 }
 
-int main(void) {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	cout.tie(0);
-	
-	cin >> n;
-	for (int i = 0; i < n; i++) {
-		xx[i] = -1;
-		yy[i] = -1;
-	}
-	for (int i = 0; i < 2 * n; i++) {
-		c1[i] = -1;
-		c2[i] = -1;
-	}
-
-	fun(0);
-
-	cout << ans;
-
-	return 0;
+int main() {
+    cin >> n;
+    fun(0);
+    cout << ans;
+    return 0;
 }
