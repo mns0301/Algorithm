@@ -1,38 +1,50 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <queue>
+#include <vector>
 using namespace std;
 
-int find(int* dp, int n) {
-	if (dp[n] != 0) return dp[n];
-	else {
-		if (n % 6 == 0) dp[n] = (find(dp, n / 3) < find(dp, n / 2) ? dp[n / 3] : dp[n / 2]) + 1;
-		else if (n % 3 == 0) dp[n] = (find(dp, n / 3) < find(dp, n - 1) ? dp[n / 3] : dp[n - 1]) + 1;
-		else if (n % 2 == 0) dp[n] = (find(dp, n / 2) < find(dp, n - 1) ? dp[n / 2] : dp[n - 1]) + 1;
-		else dp[n] = find(dp, n - 1) + 1;
-		return dp[n];
-	}
-}
+#define fastio                        \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(nullptr);                 \
+    cout.tie(nullptr)
 
-int main(void) {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	cout.tie(0);
+int main() {
+    fastio;
 
-	int n;
-	cin >> n;
-	int* dp = new int[n + 1]();
-	dp[1] = 0;
-	if (n > 1) dp[2] = 1;
-	if (n > 2) dp[3] = 1;
+    int n;
+    cin >> n;
+    if (n == 1) {
+        cout << 0;
+        return 0;
+    }
 
-	if (n == 1) {
-		cout << 0;
-		return 0;
-	}
+    queue<pair<int, int>> q;
+    vector<bool> visited(1000001, false);
+    q.push({ n, 0 });
+    visited[n] = true;
 
-	find(dp, n);
-	cout << dp[n];
+    while (!q.empty()) {
+        auto [num, lev] = q.front();
+        q.pop();
 
-	delete[] dp;
-	return 0;
+        if (num == 1) {
+            cout << lev;
+            break;
+        }
+
+        if (num % 2 == 0 && !visited[num / 2]) {
+            q.push({ num / 2, lev + 1 });
+            visited[num / 2] = true;
+        }
+        if (num % 3 == 0 && !visited[num / 3]) {
+            q.push({ num / 3, lev + 1 });
+            visited[num / 3] = true;
+        }
+        if (!visited[num - 1]) {
+            q.push({ num - 1, lev + 1 });
+            visited[num - 1] = true;
+        }
+    }
+    return 0;
 }
