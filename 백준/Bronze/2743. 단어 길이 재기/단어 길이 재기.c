@@ -1,1 +1,1 @@
-char a[101],i;main(){gets(a);for(;a[++i];);printf("%d",i);}
+i;main(){;for(;~getchar();i++);printf("%d",--i);}
