@@ -1,1 +1,1 @@
-b,c,i,j;main(){char a[101];gets(a);j=strlen(a);for(;i<j;)b=a[i++]!=a[--j]?1:b;printf("%d",!b);}
+b,i,j;char a[101];main(){j=strlen(gets(a));for(;i<j;)b=a[i++]!=a[--j]?1:b;printf("%d",!b);}
