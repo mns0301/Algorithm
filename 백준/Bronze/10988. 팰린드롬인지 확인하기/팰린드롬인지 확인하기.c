@@ -1,0 +1,1 @@
+b,c,i;main(){char a[101];gets(a);c=strlen(a)-1;for(;i<=c/2;){if(a[i]!=a[c-i++])b=1;}printf("%d",!b);}
