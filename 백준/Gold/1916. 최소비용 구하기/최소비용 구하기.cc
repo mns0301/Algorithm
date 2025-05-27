@@ -1,51 +1,75 @@
 #include <iostream>
+#include <algorithm>
 #include <vector>
+#include <array>
+#include <deque>
 #include <queue>
+#include <stack>
+#include <list>
+#include <map>
+#include <set>
+#include <cmath>
 using namespace std;
 
-int dijkstra(vector<vector<pair<int, int>>>& v, int s, int e) {
-	priority_queue<pair<int, int>> q;
-	q.push({ 0, s });
-	vector<int> dist(v.size(), 1e9);
-	dist[s] = 0;
+#define fastio ios_base::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr)
+#define ll long long
+#define vi vector<int>
+#define vl vector<ll>
+#define vvi vector<vi>
+#define vvl vector<vl>
+#define pii pair<int, int>
+#define pll pair<ll, ll>
+#define vpii vector<pii>
+#define vpll vector<pll>
+#define w(t) while(t--)
+#define f(i, n) for(int i = 0; i < n; i++)
+#define f1(i, n) for(int i = 1; i <= n; i++)
+#define unique(v) v.erase(unique(v.begin(), v.end()), v.end());
+#define max(a,b) (a > b ? a : b)
+#define min(a,b) (a < b ? a : b)
 
-	while (!q.empty()) {
-		int cost = -q.top().first;
-		int cur = q.top().second;
-		q.pop();
-		
-		if (dist[cur] < cost) continue;
-		dist[cur] = cost;
-		
-		for (int i = 0; i < v[cur].size(); i++) {
-			int sum = cost + v[cur][i].second;
-			if (dist[v[cur][i].first] > sum) {
-				dist[v[cur][i].first] = sum;
-				q.push({ -sum, v[cur][i].first });
-			}
-		}
-	}
+int dy8[8] = { -1, -1, -1, 0, 1, 1, 1, 0 };
+int dx8[8] = { -1, 0, 1, 1, 1, 0, -1, -1 };
+int dy4[4] = { -1, 0, 1, 0 };
+int dx4[4] = { 0, 1, 0, -1 };
 
-	return dist[e];
-}
+int main() {
+    fastio;
 
-int main(void) {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	cout.tie(0);
+    int n, m, s, e;
+    cin >> n >> m;
 
-	int n, m;
-	cin >> n >> m;
-	vector<vector<pair<int, int>>> v(n + 1);
-	int t1, t2, t3;
-	for (int i = 0; i < m; i++) {
-		cin >> t1 >> t2 >> t3;
-		v[t1].push_back({ t2, t3 });
-	}
-	int s, e;
-	cin >> s >> e;
+    vector<vpii> v(n + 1);
+    vi visited(n + 1, 1e9);
 
-	cout << dijkstra(v, s, e);
+    for (int i = 0; i < m; i++) {
+        int a, b, w;
+        cin >> a >> b >> w;
+        v[a].push_back({ b, w });
+    }
+    cin >> s >> e;
 
-	return 0;
+    visited[s] = 0;
+    priority_queue<pii> pq;
+    pq.push({ 0, s });
+
+    while (1) {
+        auto [w, cur] = pq.top();
+        pq.pop();
+
+        if (visited[cur] < -w) continue;
+        if (cur == e) break;
+
+        for (auto [nxt, cost] : v[cur]) {
+            cost = cost - w;
+            if (visited[nxt] > cost) {
+                visited[nxt] = cost;
+                pq.push({ -cost, nxt });
+            }
+        }
+    }
+
+    cout << visited[e];
+
+    return 0;
 }
