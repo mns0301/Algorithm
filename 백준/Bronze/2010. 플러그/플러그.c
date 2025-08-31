@@ -1,13 +1,9 @@
-#include <stdio.h>
-
-int main() {
-    int n;
+int n, t, s;
+main() {
     scanf("%d", &n);
-    int s = 1 - n;
-    for (int i = 0; i <n ; i++) {
-        int tmp;
-        scanf("%d", &tmp);
-        s += tmp;
+    while(n--) {
+        scanf("%d", &t);
+        s += --t;
     }
-    printf("%d", s);
+    printf("%d", ++s);
 }
