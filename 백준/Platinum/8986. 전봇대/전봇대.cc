@@ -66,7 +66,7 @@ int main() {
             r = mid;
         }
     }
-    cout << fun(l);
+    cout << min(fun(l), fun(r));
 
     return 0;
 }
