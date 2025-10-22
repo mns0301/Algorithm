@@ -10,6 +10,7 @@
 #include <set>
 #include <cmath>
 #include <random>
+#include <time.h>
 using namespace std;
 
 #define fastio ios_base::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr)
@@ -75,9 +76,9 @@ int main() {
         cout << "success\n";
         return 0;
     }
-    srand(0);
+    srand(time(0));
 
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 5; i++) {
         int a = rand()%n;
     	int b = rand()%n;
 		while(a==b)
