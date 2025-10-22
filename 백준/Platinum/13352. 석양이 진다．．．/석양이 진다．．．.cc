@@ -26,14 +26,6 @@ using namespace std;
 #define w(t) while(t--)
 #define f(i, n) for(int i = 0; i < n; i++)
 #define f1(i, n) for(int i = 1; i <= n; i++)
-#define unique(v) v.erase(unique(v.begin(), v.end()), v.end());
-#define max(a,b) (a > b ? a : b)
-#define min(a,b) (a < b ? a : b)
-
-int dy8[8] = { -1, -1, -1, 0, 1, 1, 1, 0 };
-int dx8[8] = { -1, 0, 1, 1, 1, 0, -1, -1 };
-int dy4[4] = { -1, 0, 1, 0 };
-int dx4[4] = { 0, 1, 0, -1 };
 
 vpll v(100000);
 int n;
@@ -51,13 +43,12 @@ bool fun(int a, int b) {
             l1.push_back(v[i]);
         }
     	else {
-            l2.push_back(v[i]);
-        }
-    }
-    if (l2.size() > 2) {
-        for (int i = 2; i < l2.size(); i++) {
-    		if (cross(l2[0], l2[1], l2[i]))
-                return 0;
+			if (l2.size() < 2)
+	            l2.push_back(v[i]);
+			else {
+				if (cross(l2[0], l2[1], v[i]))
+					return 0;
+            }
         }
     }
     return 1;
