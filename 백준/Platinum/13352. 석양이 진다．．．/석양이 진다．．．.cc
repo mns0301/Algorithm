@@ -77,7 +77,7 @@ int main() {
     }
     srand(0);
 
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 8; i++) {
         int a = rand()%n;
     	int b = rand()%n;
 		while(a==b)
