@@ -1,2 +1,2 @@
-#include <iostream>
-using namespace std;int k,m,x,v;int main(){for(cin>>k>>k>>v;cin>>v;){if(m-v>k)x=1;m=max(m,v);}cout<<(x?"NO":"YES");}
+#import<iostream>
+int a,b,k;main(){for(std::cin>>a>>k>>b;std::cin>>a;a>b?b=a:b)if(b-a>k)break;std::cout<<(b-a>k?"NO":"YES");}
