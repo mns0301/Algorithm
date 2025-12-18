@@ -1,89 +1,76 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <array>
-#include <deque>
-#include <cmath>
 using namespace std;
 
-#define fastio ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
+#define fastio ios_base::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr)
+//#define int long long
 #define ll long long
-#define str string
-#define vi vector<int>
-#define vl vector<ll>
-#define vvi vector<vi>
-#define vvl vector<vl>
+#define ld long double
 #define pii pair<int, int>
-#define pll pair<ll, ll>
+#define vi vector<int>
+#define vvi vector<vi>
 #define vpii vector<pii>
-#define vpll vector<pll>
+#define loop(t) while(t--)
 #define f(i, n) for(int i = 0; i < n; i++)
+#define f1(i, n) for(int i = 1; i <= n; i++)
+#define foreach(i, v) for(auto i : v)
+#define unique(v) v.erase(unique(v.begin(), v.end()), v.end());
 
-int n, m;
-vi an, bn;
-vi s_an, s_bn, temp;
-int k;
-int a, b;
-int ai, bi;
-
-void input();
-void fun();
-void output();
-
-void input() {
-    cin >> n;
-    an.resize(n);
-    for (int i = 0; i < n; i++) cin >> an[i];
-    cin >> m;
-    bn.resize(m);
-    for (int i = 0; i < m; i++) cin >> bn[i];
-
-    s_an = an;
-    s_bn = bn;
-    sort(s_an.begin(), s_an.end(), greater<int>());
-    sort(s_bn.begin(), s_bn.end(), greater<int>());
-}
-
-void fun() {
-    while (a < n && b < m) {
-        if (s_an[a] > s_bn[b]) a++;
-        else if (s_an[a] < s_bn[b]) b++;
-        else {
-			int x = -1, y = -1;
-			for (int i = ai; i < n; i++) {
-				if (s_an[a] == an[i]) {
-					x = i;
-					break;
-				}
-			}
-			for (int i = bi; i < m; i++) {
-				if (s_bn[b] == bn[i]) {
-					y = i;
-					break;
-				}
-			}
-			if (x != -1 && y != -1) {
-				temp.push_back(an[x]);
-				ai = ++x;
-				bi = ++y;
-			}
-            a++;
-            b++;
-        }
-    }
-}
-
-void output() {
-    cout << temp.size() << "\n";
-	for (int i = 0; i < temp.size(); i++) cout << temp[i] << " ";
-}
+int dy8[8] = { -1, -1, -1, 1, 1, 1, 0, 0 };
+int dx8[8] = { -1, 0, 1, -1, 0, 1, -1, 1 };
+int dy4[4] = { 0, 0, -1, 1 };
+int dx4[4] = { -1, 1, 0, 0 };
 
 int main() {
     fastio;
 
-    input();
-    fun();
-    output();
+    int n, m;
+    vector<int> v[101], w[101];
+    cin >> n;
+    f(i, n) {
+        int t;
+        cin >> t;
+        v[t].push_back(i);
+    }
+    cin >> m;
+    f(i, m) {
+        int t;
+        cin >> t;
+        w[t].push_back(i);
+    }
+    vi ans;
+    int iv = -1, iw = -1;
+    for (int i = 100; i >= 0; i--) {
+        if (v[i].empty() || w[i].empty()) continue;
+
+    xxxx:;
+        int t1 = -1, t2 = -1;
+        foreach (x, v[i]) {
+            if (iv < x) {
+                t1 = x;
+                break;
+            }
+        }
+        foreach(x, w[i]) {
+            if (iw < x) {
+                t2 = x;
+                break;
+            }
+        }
+
+        if (t1 == -1 || t2 == -1) continue;
+        else {
+            iv = t1;
+            iw = t2;
+            // cout << iv << " " << iw << "\n";
+            ans.push_back(i);
+            goto xxxx;
+        }
+    }
+    cout << ans.size() << "\n";
+    foreach(x, ans)
+        cout << x << ' ';
 
     return 0;
 }
